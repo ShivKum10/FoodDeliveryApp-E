@@ -1,23 +1,60 @@
 package edu.classproject.payment;
 
-import edu.classproject.common.Money;
+import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import edu.classproject.common.Money;
 
-class MockPaymentServiceTest {
-    private final MockPaymentService paymentService = new MockPaymentService();
+/**
+ * Unit tests for MockPaymentService.
+ */
+public class MockPaymentServiceTest {
+
+    private final PaymentService paymentService = new MockPaymentService();
 
     @Test
-    void processPayment_shouldApprove_whenAmountIsPositive() {
-        PaymentResult result = paymentService.processPayment("USR-1", Money.of(12.0));
+    public void testSuccessfulPayment() {
+        Money amount = new Money(new BigDecimal("50.00"));
+        PaymentResult result = paymentService.processPayment("user123", amount);
+
         assertTrue(result.success());
+        assertNotNull(result.transactionId());
+        assertEquals("Payment approved", result.message());
     }
 
     @Test
-    void processPayment_shouldDecline_whenAmountIsZero() {
-        PaymentResult result = paymentService.processPayment("USR-1", Money.of(0.0));
+    public void testZeroAmount() {
+        Money amount = new Money(BigDecimal.ZERO);
+        PaymentResult result = paymentService.processPayment("user123", amount);
+
         assertFalse(result.success());
+        assertNull(result.transactionId());
+        assertEquals("Amount must be positive", result.message());
+    }
+
+    @Test
+    public void testNegativeAmount() {
+        Money amount = new Money(new BigDecimal("-10.00"));
+        PaymentResult result = paymentService.processPayment("user123", amount);
+
+        assertFalse(result.success());
+        assertNull(result.transactionId());
+        assertEquals("Amount must be positive", result.message());
+    }
+
+    @Test
+    public void testInvalidUserId() {
+        Money amount = new Money(new BigDecimal("50.00"));
+        PaymentResult result = paymentService.processPayment("", amount);
+
+        assertFalse(result.success());
+        assertNull(result.transactionId());
+        assertEquals("Invalid user", result.message());
     }
 }
