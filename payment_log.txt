@@ -1,0 +1,28 @@
+--------------------------------------------------
+Timestamp     : 2026-04-23 12:55:44
+Success       : true
+Transaction ID: TXN-0cf32977
+Message       : Payment approved
+Details       : {userId=USR-32254bf1, transactionId=TXN-0cf32977, status=approved}
+--------------------------------------------------
+--------------------------------------------------
+Timestamp     : 2026-04-23 12:55:44
+Success       : false
+Transaction ID: TXN-4ef295f4
+Message       : Amount must be positive
+Details       : {reason=Amount must be positive, userId=USR-7aa27ac2, transactionId=TXN-4ef295f4}
+--------------------------------------------------
+--------------------------------------------------
+Timestamp     : 2026-04-23 12:55:44
+Success       : false
+Transaction ID: TXN-c29e58a3
+Message       : Amount must be positive
+Details       : {reason=Amount must be positive, userId=USR-d64ca6f6, transactionId=TXN-c29e58a3}
+--------------------------------------------------
+--------------------------------------------------
+Timestamp     : 2026-04-23 12:55:44
+Success       : false
+Transaction ID: TXN-73ecceda
+Message       : Invalid user
+Details       : {reason=Invalid user, userId=USR-a1683cb2, transactionId=TXN-73ecceda}
+--------------------------------------------------

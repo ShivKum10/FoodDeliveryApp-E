@@ -5,7 +5,6 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +33,7 @@ public class MockPaymentServiceTest {
         PaymentResult result = paymentService.processPayment("user123", amount);
 
         assertFalse(result.success());
-        assertNull(result.transactionId());
+        assertNotNull(result.transactionId());
         assertEquals("Amount must be positive", result.message());
     }
 
@@ -44,7 +43,7 @@ public class MockPaymentServiceTest {
         PaymentResult result = paymentService.processPayment("user123", amount);
 
         assertFalse(result.success());
-        assertNull(result.transactionId());
+        assertNotNull(result.transactionId());
         assertEquals("Amount must be positive", result.message());
     }
 
@@ -54,7 +53,7 @@ public class MockPaymentServiceTest {
         PaymentResult result = paymentService.processPayment("", amount);
 
         assertFalse(result.success());
-        assertNull(result.transactionId());
+        assertNotNull(result.transactionId());
         assertEquals("Invalid user", result.message());
     }
 }

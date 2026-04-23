@@ -1,5 +1,12 @@
 package edu.classproject.order;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import edu.classproject.common.Money;
 import edu.classproject.common.OrderStatus;
 import edu.classproject.notification.NotificationService;
@@ -10,13 +17,6 @@ import edu.classproject.restaurant.InMemoryRestaurantRepository;
 import edu.classproject.restaurant.MenuItem;
 import edu.classproject.restaurant.Restaurant;
 import edu.classproject.restaurant.RestaurantService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DefaultOrderServiceTest {
     private RestaurantService restaurantService;
@@ -35,7 +35,7 @@ class DefaultOrderServiceTest {
         Restaurant restaurant = restaurantService.createRestaurant("Test Restaurant");
         MenuItem item = restaurantService.addMenuItem(restaurant.restaurantId(), "Pasta", Money.of(10.00));
 
-        PaymentService paymentService = (userId, amount) -> PaymentResult.approved("TXN-1");
+        PaymentService paymentService = (userId, amount) -> PaymentResult.approved("USR-1", "TXN-1");
 
         DefaultOrderService orderService = new DefaultOrderService(
                 orderRepository,
@@ -60,8 +60,7 @@ class DefaultOrderServiceTest {
         Restaurant restaurant = restaurantService.createRestaurant("Test Restaurant");
         MenuItem item = restaurantService.addMenuItem(restaurant.restaurantId(), "Pasta", Money.of(10.00));
 
-        PaymentService paymentService = (userId, amount) -> PaymentResult.declined("Card declined");
-
+        PaymentService paymentService = (userId, amount) -> PaymentResult.declined("USR-1", "Card declined");
         DefaultOrderService orderService = new DefaultOrderService(
                 orderRepository,
                 restaurantService,
